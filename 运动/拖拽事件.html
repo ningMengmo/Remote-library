@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		div{
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: yellowgreen;
+		}
+	</style>
+</head>
+<body>
+	
+	<div></div>
+
+</body>
+<script>
+	// 拖拽移动话可以查看  js收官 ——>　webAPI ——> DOM尺寸 ——> P1
+	// 只是算法有点不同道理是一样的
+
+	//pageX Y == clientX Y
+	var div = document.getElementsByTagName('div')[0];
+
+	div.onmousedown = function (e) {
+		var event = e || window.event;
+
+		//鼠标点击位置 - 元素的当前位置算出的是鼠标在元素中的点击位置（相对位置） 如点击位置X45 Y45      
+		var disX = e.clientX - this.offsetLeft;
+		var disY = e.clientY - this.offsetTop;
+		// console.log(disX,disY);
+		var dom = this;
+		document.onmousemove = function (e) {
+			var event = e || window.event; //event 	代表事件的状态，例如触发event对象的元素，鼠标的位置及状态、按下的键等等
+
+			dom.style.left = e.clientX - disX + 'px'; //鼠标点击的位置例如X是45 Y是45 在mousemove事件触发后鼠标的位置已经移出了很多了  
+			//那就是现在鼠标移出的位置 - 相对位置 得出的结果就是元素移动的位置 在赋值回元素   X移出89 Y移出68 89-45 68-45 left：44  top:23
+			dom.style.top = e.clientY - disY + 'px';
+			// console.log(event.clientX,event.clientY);
+		}
+		document.onmouseup = function () { //取消事件  mouseup也要取消不然它会一直在执行
+			document.onmousemove = null;
+			document.onmouseup = null;
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 3000px;
+        height: 3000px;
+      }
+      div{
+        background-color: red;
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: 0;
+        top:1500px;
+      }
+      
+
+    </style>
+  </head>
+  <body>
+
+    <div id="dome" style=' opacity: 0.1;'></div>
+
+    <!-- <div class="rep">
+      <p class="  dome   box  f">
+        <span class="dome  doc  ">
+
+        </span>
+      </p>
+    </div>
+    <p class=" domedome ">
+      <span class="box dome"></span>
+    </p>
+    <div class="  dome"></div> -->
+
+    <script>
+      // 滚轮滚动事件
+      // offsetTop    window.pageYOffset 滚动条   window.innerHeight 视口尺寸 
+      function check(id) {
+       var dv = document.getElementById(id);
+       if(dv.offsetTop <= window.pageYOffset + window.innerHeight){
+           dv.timer = setInterval(function () {
+             if(dv.style.opacity == '1'){
+                 clearInterval(dv.timer);
+             }else{
+                dv.style.opacity = parseFloat(dv.style.opacity) + 0.01;
+             }
+           }, 60);
+           if(dv.style.opacity != '1'){
+             var key = true;
+           }else if(dv.style.opacity == '1'){
+            key = false;
+           }
+       }
+      }
+
+      window.onscroll = function () {
+       check('dome');
+      }
+      
+      //简单的抽奖
+      // var  mun = Math.random() * 5;
+      // if(mun <= 0.5){
+      //   alert('一等奖');
+      // }else if(mun <= 1){
+      //   alert('二等奖');
+      // }else{
+      //   alert('谢谢惠顾');
+      // }
+        
+      
+      //封装byClassName 
+      //   Document.prototype.getElementsByClassName = Element.prototype.getElementsByClassName = function (cn) {
+      //     //选出所有标签
+      //     var domarr = this.getElementsByTagName('*');
+      //     //存入符合条件的
+      //     var lastDom = [];
+      //     //去除多余空格
+      //     function space(sClass) {
+      //       var reg = /\s+/g;
+      //       var newSclass = sClass.replace(reg,' ');
+      //       return newSclass;
+      //     }
+      //     //循环
+      //     for(var i = 0; i < domarr.length; i++){
+      //       var laststr = space(domarr[i].className).trim();
+      //       var classArr = laststr.split(' '); //拆分；
+      //       //循环拆分的
+      //       for(var j = 0; j < classArr.length; j++){
+      //         // console.log(classArr[j]);
+      //         if(classArr[j] == cn){
+      //           lastDom.push(domarr[i]);
+      //           break;
+      //         }
+      //       }
+      //     }
+      //     return lastDom;
+      //   }
+      // console.log(document.getElementsByClassName('dome'));
+      var div = document.getElementsByTagName('div')[0];
+
+
+
+
+    </script>
+  </body>
+</html>

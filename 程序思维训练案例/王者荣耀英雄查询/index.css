@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    background-color: #ecedf2;
+}
+
+/* 头部样式 */
+.container {
+    width: 1140px;
+    margin: 1em auto;
+}
+
+.title {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    height: 100px;
+    line-height: 50px;
+}
+
+.title .txt {
+    width: 80px;
+    background: #5488d5;
+    border-radius: 10px 0 0 10px;
+    color: aliceblue;
+    font-weight: 540;
+    text-align: center;
+}
+
+.title .txt P {
+    width: 100%;
+    height: 50px;
+}
+
+/* 中间的部分 */
+.title .types {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    background: #ffffff;
+    flex: 1 0 auto;
+}
+
+.types .type-choice {
+    flex: 1 0 auto;
+}
+
+.type-list {
+    display: flex;
+    padding-left: 20px;
+}
+
+/* 选项样式 */
+.radio {
+    height: 50px;
+    line-height: 50px;
+    padding-left: 30px;
+    margin-right: 30px;
+    color: #918c8c;
+    font-size: 14px;
+    position: relative;
+    cursor: pointer
+}
+
+.radio::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 1px solid #918c8c;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.radio::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: #5488d5;
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.radio.check::after {
+    transform: translateY(-50%) scale(1);
+}
+
+/* 文本框样式 */
+.types .keyword {
+    padding-right: 30px;
+}
+
+.keyword .word {
+    position: relative;
+    width: 300px;
+    height: 40px;
+    margin-top: 50px;
+    padding-right: 40px;
+    border: 1px solid #918c8c;
+    border-radius: 6px;
+}
+
+
+.keyword .word input {
+    width: 100%;
+    height: 100%;
+    display: block;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    padding-left: 12px;
+    font-size: 12px;
+}
+
+.word::after {
+    content: '';
+    width: 40px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+    border-left: 1px solid #918c8c;
+    background: url(./王者荣耀官网英雄查询-素材/search_icon.png) no-repeat center;
+}
+
+/* 结束 */
+
+/* 内容区域开始 */
+.list {
+    width: 1140px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    justify-items: center;
+    text-align: center;
+    row-gap: 20px;
+    font-size: 14px;
+    color: #333;
+    list-style: none;
+
+}
+
+.list img {
+    width: 77px;
+    height: 77px;
+    display: block;
+    margin-bottom: 5px;
+    border: 2px solid #5f89cf;
+    border-radius: 10px 0 10px 0;
+    background-color: aquamarine;
+}
+
+/* 结束 */

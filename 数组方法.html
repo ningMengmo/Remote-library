@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <ul>
+        <li>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+        </li>
+    </ul>
+
+    <script>
+        var oUl = document.getElementsByTagName('ul')[0];
+        var oLiArr = oUl.getElementsByTagName('li');
+        
+
+        var personArr = [
+            {name: '张三', age: 17, des:'哈哈', sex: 'man'},
+            {name: '喵喵', age: 16, des:'嘿嘿', sex: 'girl'},
+            {name: '李四', age: 10, des:'啊啊', sex: 'man'},
+            {name: '倩倩', age: 18, des:'略略略', sex: 'giel'},
+            {name: '丁丁', age: 22, des:'吼吼吼', sex: 'monkey'}
+        ];
+        //下面的方法都是定义在Array.prototype上的方法
+
+        //reduce 方法   传参也是函数   不过它要传4个值    累加循环    正着走 0 1 2 3 4
+        //reduceRight 方法  是倒着往前  最后往前   4 3 2 1 0
+
+        // var arrNumber = [1,3,5,7,9];     
+       
+        // var test = arrNumber.reduce(function (prevValue,currentValue,idenx,self){
+        //     return  prevValue + currentValue;
+        // })
+        // console.log(arrNumber,test);   //数组本身  和累计的和
+
+
+        // var strCookie = 'B=E909DF89519E8E809361CF2BCA20C26C; PS=1591533598; BD_UPN=12314753; se=0; ID=ACBFE49D675; aa=55; ss=66;';
+         
+        // function newCookie (str) {
+        //     var objCookie = {};
+        //     var cookieArr = str.split('; ');   //字符串上的方法  拆分字符串变成数组
+        //     // console.log(cookieArr);
+        //     cookieArr.reduce(function (prevValue,currentValue,idenx,self) {
+        //         // console.log(prevValue,currentValue);
+        //         var arr = currentValue.split('=');   //等号为分界差分字符串
+        //         prevValue[ arr[0] ] = arr[1];   //第0位作为属性名  第一位为值
+        //         // console.log(idenx);
+        //         return prevValue;
+        //     },objCookie);   //objCookie == prevValue
+
+        //     return objCookie;    //返回出去
+        // }
+        // // console.log( newCookie(strCookie) );
+        // var nc = newCookie(strCookie);
+      
+      
+        //reduce源码  实现原理 
+        
+        // Array.prototype.myReduce = function (fun,initialValue){
+        //     var len = this.length;
+        //     var _this = arguments[2] || window;  //不是1  是因为this指向的值是 2传进来
+        //     var nexValue = initialValue;   //这样至少能保证下面循环参数是没问题的
+        //     for(var i = 0; i < len; i++){
+        //        nexValue  = fun.apply(_this,[nexValue,this[i],i,this]);  //执行时候是先执行 等号右边的 在赋值回去  在进行下一次时候 nexValue 等于上一次的值
+        //     }
+        //     return nexValue;
+        // }
+
+        //prevValue 在myReduce中 等于 initialValue   initialValue在执行是 等于 nexValue 
+
+        // var strCookie = 'B=E909DF89519E8E809361CF2BCA20C26C; PS=1591533598; BD_UPN=12314753; se=0; ID=ACBFE49D675; aa=55; ss=66;';
+         
+        // function newCookie (str) {
+        //     var objCookie = {};
+        //     var cookieArr = str.split('; ');
+        //     cookieArr.myReduce(function (prevValue,currentValue,idenx,self) {
+        //         var arr = currentValue.split('='); 
+        //         prevValue[ arr[0] ] = arr[1]; 
+        //         console.log(idenx);
+        //         return prevValue;
+        //     },objCookie);  
+        //     return objCookie;   
+        // }
+        // var nc = newCookie(strCookie);
+
+        //reduceRight源码  实现原理
+
+        // Array.prototype.myReduceRight = function (fun,initialValue){
+        //     var len = this.length;
+        //     var _this = arguments[2] || window;  //不是1  是因为this指向的值是 2传进来
+        //     var nexValue = initialValue;   //这样至少能保证下面循环参数是没问题的
+        //     for(var i = len - 1; i >= 0; i--){   //逆着循环  
+        //        nexValue  = fun.call(_this,nexValue,this[i],i,this);  //执行时候是先执行 等号右边的 在赋值回去  在进行下一次时候 nexValue 等于上一次的值
+        //     }
+        //     return nexValue;
+        // }
+
+        // var strCookie = 'B=E909DF89519E8E809361CF2BCA20C26C; PS=1591533598; BD_UPN=12314753; se=0; ID=ACBFE49D675; aa=55; ss=66;';
+         
+        // function newCookie (str) {
+        //     var objCookie = { };
+        //     var cookieArr = str.split('; ');
+        //     // console.log(cookieArr);
+        //     cookieArr.myReduceRight(function (prevValue,currentValue,idenx,self) {
+        //         // console.log(currentValue);
+        //         var arr = currentValue.split('='); 
+        //         prevValue[ arr[0] ] = arr[1]; 
+        //         // console.log(idenx);
+        //         return prevValue;
+        //     },objCookie);  
+        //     return objCookie;   
+        // }
+        // // console.log(newCookie(strCookie));
+        // var nc = newCookie(strCookie);
+
+
+
+        //some 方法 检测数组中的元素是否满足指定条件 （满足一个即可）
+
+        // var flag = personArr.some(function(ele,idenx,self){
+        //     if(ele.age <= 10){
+        //         return true;
+        //     }else{
+        //         return false
+        //     }
+        // });
+        // console.log(flag);
+
+        //some源码  实现原理    其实就是与every方法  反一下  碰到真就停
+
+        // Array.prototype.mySome =function (fun) {
+        // //    var flag = true; 
+        //    var len = this.length;
+        //    var _this = arguments[1] || window;
+        //    for(var i = 0; i < len; i++){
+        //       if( fun.apply(_this,[this[i],i,this]) == true){
+        //         return  true;  
+        //         break;   //碰到真值就终止循环  
+        //       }
+        //    }
+        //    return false;
+        //  }
+
+        // var flag = personArr.mySome(function(ele,idenx,self){
+        //     if(ele.age <= 10){
+        //         return true;
+        //     }else{
+        //         return false
+        //     }
+        // });
+
+        // console.log(flag);
+
+
+
+
+
+        //every方法   目的是：判断数组中的元素是否都符合条件  第二个参数  this是谁
+        //传参数 函数   返回是 true  或者  false
+
+        // var flag = personArr.every(function(ele,idenx,self){
+        //     if(ele.age >= 18){
+        //         return true;
+        //     }else{
+        //         return false
+        //     }
+        // });
+        // console.log(flag);
+
+        //every源码  实现原理
+        
+        // Array.prototype.myEvery =function (fun) {
+        //     var flag = true;   //假设进来的都是真的
+        //     var len = this.length;
+        //     var _this = arguments[1] || window;
+        //     for(var i = 0; i < len; i++){
+        //         if(fun.apply(_this,[this[i],i,this]) == false ){
+        //             return flag = false;
+        //             break;  //已经有一个是假值了  那么就可以返回并且终止循环
+        //         }
+        //     }
+        //     return flag;
+        //  }
+           
+        // var flag = personArr.myEvery(function(ele,idenx,self){
+        //     if(ele.age >= 18){
+        //         return true;
+        //     }else{
+        //         return false
+        //     }
+        // });
+        // console.log(flag);
+
+
+
+
+
+
+
+
+
+        //map 方法  映射作用  在原有的数组上加上想改的值让后加入到新数组 返回新的数组  传参也是函数   也可以有第二个参数  this是谁
+
+        var a = {a:123};
+        var newArr =  personArr.map(function (ele,idenx,self){ 
+            // ele.age += 10;
+            // console.log(this);
+            return ele.name = 123; 
+        },a);
+        // console.log(newArr);
+
+        //map源码  实现原理
+
+        //  Array.prototype.myMap =function (fun) {
+        //     var arr = [];
+        //     var len = this.length;
+        //     var _this = arguments[1] || window;
+        //     for(var i = 0; i < len; i++){
+        //         arr.push( fun.apply(_this,[this[i],i,this]));
+        //     }
+        //     return arr;
+        //  }
+
+        // var a = {};
+        // var newArr =  personArr.myMap(function (ele,idenx,self){ 
+        //     // ele.age += 10;
+        //     // console.log(this);
+        //     return ele.name; 
+        // });
+        // console.log(newArr);
+
+        
+
+
+
+
+        //filter 方法   对数组过滤的作用，基于遍历    是true的返回
+        //传参  函数  filter执行完后会返回一个新的数组[]   同样可以有第二位参数  性质与foreach 一样
+
+        // var newArr = personArr.filter(function (ele,idenx,self){ 
+        //     return ele.sex ==  'man'; 
+        // });
+
+        //filter源码  实现原理
+
+        // Array.prototype.myFilter = function (fun) {   //fun 就是那个被传进来的函数
+        //     var arr = [];
+        //     var len = this.length;
+        //     var _this = arguments[1] || window;   //  ||碰到假的往后走  全假才为假
+        //     for(var i =0; i < len; i++){
+        //         fun.apply(_this,[this[i],i,this]) && arr.push(this[i]);   //  &&碰到真的向后走 全真才为真
+        //     }
+        //     return arr;
+        // }
+
+        // var obj = {name:'aaa'}
+
+        // var newArr = personArr.myFilter(function (ele,idenx,self){ 
+        //     // console.log(this);
+        //     return ele.sex ==  'man';             
+        // },obj);
+
+        // console.log(newArr);
+
+
+
+
+        //定义在Array.prototype上
+        //forEach  传参是个函数    这个方法会自己循环调用  调用多少次取决于元素的个数
+
+        //ele:{name: '张三', age: 18, des:'哈哈', sex: 'man'}
+        //idenx: 索引位置 0
+        //arr: 数组本身  personArr里
+        //这些位置是在forEach已经被定义好了
+        
+        // function plan(ele,idenx,self) {
+        //     oLiArr[idenx].innerText = ele.name;
+        //     console.log(ele,idenx,self);
+        // }
+
+        // personArr.forEach(plan);    //还有第二个参数传进来那个是this的指向  没传就默认指向传了就指向传进来的 一般不常用
+
+        //forEach源码  实现原理
+
+        // Array.prototype.myForEach = function (fun) {
+        //     var len = this.length;
+        //     var _this = arguments[1] != undefined ? arguments[1] : window ;
+        //     for(var i = 0; i < len; i++){
+        //         fun.apply(_this,[this[i], i, this]);   //循环执行这个函数  相当于调用这个plan这个函数
+        //     }
+        // }
+
+        // var obj = {
+        //     name: 'ccc'
+        // }
+
+        // function plan(ele,idenx,self) {
+        //     // oLiArr[idenx].innerText = ele.name;
+        //     console.log(ele,idenx,self,this);
+        // }
+
+        // personArr.myForEach(plan,obj);
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* *{
+            margin: 0;
+            padding: 0;
+        }*/
+      /* div{
+        width: 100px;
+        height: 100px;
+        background: turquoise;
+        position: absolute;
+        left: 0px;
+        top: 0;
+      }
+      button{
+          margin-top: 150px;
+      }
+      span{
+          position: absolute;
+          left: 450px;
+          top: 0;
+          width: 1px;
+          height: 100px;
+          background: black;
+      } */
+
+      /* div{
+          position: absolute;
+          left: -400px;
+          top: 100px;
+          width: 400px;
+          height: 80px;
+          background: turquoise;
+      }
+      div span{
+          position: absolute;
+          right: -40px;
+          top: 0;
+          width: 40px;
+          height: 80px;
+          background:yellowgreen;
+      } */
+
+      /* div{
+          width: 100px;
+          height: 100px;
+          margin-top: 100px;
+          margin-left: 100px;
+          background: yellowgreen;
+          opacity: 1;
+      } */
+
+      /* div{
+          width: 100px;
+          height: 100px;
+          background: aquamarine;
+          margin-bottom: 50px;
+          opacity: 1;
+          position: absolute;
+          left: 0;
+      }
+      #oDiv{
+          top: 100px;
+      }
+      #myDiv{
+          top: 250px;
+      } */
+
+      /* div{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100px;
+          height: 100px;
+          background: aquamarine;
+      } */
+      /* span{
+          position: absolute;
+          left: 450px;
+          top: 0;
+          width: 1px;
+          height: 100px;
+          background: black;
+      } */
+
+      *{
+          margin: 0;
+          padding: 0;
+          list-style: none;
+      }
+      ul{
+        position: relative;
+        width: 800px;
+        height: 100px;
+        margin: 100px auto;
+      }
+
+      ul li.t{
+          float: left;
+          background: aquamarine;
+          width: 198px;
+          height: 98px;
+          border: 1px solid black; 
+          line-height: 100px;
+          text-align: center;
+      }
+     ul li.a{
+        border-left: none;
+      }
+      ul li.bg{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 200px;
+          height: 100px;
+          opacity: 0.5;
+          background:yellow;
+          border: none;
+      }
+      
+    </style>
+</head>
+<body>
+    
+    <!-- <div></div>
+    <span></span>
+    <button id="btn">点击移动</button> -->
+
+
+    <!-- <div class="iv">
+        <span></span>
+    </div> -->
+
+
+
+
+    <!-- <div id='dome'></div> -->
+
+<!-- 
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div> -->
+
+    <!-- <div id="oDiv"></div>
+    <div id="myDiv"></div> -->
+
+
+    <!-- <div></div>
+    <span></span> -->
+    <ul>
+        <li class='t'>1</li>
+        <li class='a t' >2</li>
+        <li class='a t' >3</li>
+        <li class='a t' >4</li>
+        <li class="bg"></li>
+    </ul>
+    
+ <script>
+    //匀速运动
+    //缓冲运动
+    //多物体运动
+    //多物体运动多值运动 + 回调机制
+    //加速运动
+    // var timer = null;
+
+    //弹性运动小案例
+    var liArr = document.getElementsByTagName('li');
+    var liBg = liArr[liArr.length - 1];
+    var timer = null;
+
+    for(var i = 0; i < liArr.length - 1; i++){
+        // console.log(1);
+        liArr[i].onmouseenter = function () {
+            startMove(liBg,this.offsetLeft);
+        }
+    }
+
+    function startMove(dom,target){
+        clearInterval(timer);
+        var a = 3,
+            iSpeed = 0;
+            u = 0.8;
+        timer = setInterval (function () {
+            a = (target - dom.offsetLeft) / 5;
+            iSpeed += a;
+            iSpeed *= u;
+            if( Math.abs(iSpeed) < 1 && Math.abs(target - dom.offsetLeft) < 1 ){
+                clearInterval(timer);
+                dom.style.left = target + 'px';
+            }else{
+                dom.style.left = dom.offsetLeft + iSpeed +'px';
+            }
+        },30)
+    }
+
+
+
+
+    //弹性运动
+    // var div = document.getElementsByTagName('div')[0];
+    // div.onclick = function () {
+    //     startMove(this,450);
+    // }
+    // var timer = null;
+    // function startMove(dom,target) {
+    //     clearInterval(timer);
+    //     var a = 3,   //变的值
+    //         iSpeed = 0, //速度
+    //         u = 0.8;   //损耗值
+    //     timer = setInterval(function() {
+    //         // if(dom.offsetLeft < target){
+    //         //     iSpeed += a;
+    //         // }else{
+    //         //     iSpeed -= a;
+    //         // }  //并不是想让他一直匀速来回运动
+    //         a = (target - dom.offsetLeft) / 5;  //借用缓冲运动的思路  让速度一直在改变
+    //         iSpeed += a;
+    //         iSpeed *= u;   //速度要有损耗值  
+    //         // console.log(iSpeed);
+    //         if( Math.abs(iSpeed) < 1 && Math.abs(target - dom.offsetLeft) < 1 ) {  //取整  速度小于 1  目标 - 当前位置也小于 1 时才会停止
+    //             clearInterval(timer);
+    //             dom.style.left = target + 'px';   //差几像素就直接等于目标值
+    //         }else{
+    //             dom.style.left = dom.offsetLeft + iSpeed + 'px';
+    //         }
+    //     },30);
+    // } 
+
+
+
+
+
+    //加速运动
+    //v = v + at; v是速度   a是加是速度   t相当于是定时器   v = v 的期初速度  + a变速
+    //加速度不变的加速运动  运动方向是向右
+    //加速度不变的减速运动  加速不变的加速运动是 向左
+    // var timer = null;
+    // var div = document.getElementsByTagName('div')[0];
+    // div.onclick = function () {
+    //     steartMove(this);
+    // }
+    // function steartMove(dom) {
+    //     clearInterval(timer);
+    //     var a = 2,//  变量速度  -2 是减速运动
+    //          iSpeed = null;
+    //     timer = setInterval(function () {
+    //         iSpeed = iSpeed + a;
+    //         dom.style.left = dom.offsetLeft + iSpeed + 'px';
+    //         //  console.log(1);
+    //     },30);
+    // }
+    
+
+
+
+
+    //多物体运动多值运动 + 回调机制
+    // var div = document.getElementById('oDiv');
+    // var div1 = document.getElementById('myDiv');
+
+    // div.onclick = function () {
+    //     startMove(this,{width:200,height:200,left:200,top:300,background :'#f1939c',opacity:50},function () {
+    //         startMove(div1,{width:50,height:50,left:450,top:400,border:1,background:'#500a16'},function () {
+    //             // alert('+.+');
+    //         });
+    //     });
+    // }
+   
+
+    // function getStyle (elem,prop) { //查找样式
+    //     if(window.getComputedStyle) {
+    //     	return window.getComputedStyle(elem,null)[prop];    //null 的位置是伪类 
+    //     }else {
+    //          return elem.currentstyle[prop];
+    //     }
+    // } 
+
+    // function startMove(dom,arrObj,callBack){  //三个值分别是：操作谁，改变那个样式的值，回调机制函数
+    //     clearInterval(dom.timer);
+    //     var iSpeed = null,
+    //         iCur = null;
+    //     dom.timer = setInterval(function () {
+    //         var stop = true;  //假设可以停止
+    //         for(var prop in arrObj){  //利用 for in 循环把传进来的对象样式遍历出来
+    //             if(prop == 'opacity'){
+    //                 iCur = parseFloat( getStyle(dom,prop) )  * 100;
+    //                 // console.log(1); 
+    //             }else {
+    //                 iCur = parseInt( getStyle(dom,prop) );
+    //                 // console.log(2);
+    //             }
+    //             iSpeed = (arrObj[prop] - iCur) / 7;
+    //             iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed); //向上取整 还是向下取整 
+    //             if(prop == 'opacity'){
+    //                 dom.style.opacity = (iCur + iSpeed) / 100;
+    //                 // console.log(3); 
+    //             }else if (prop == 'background'){
+    //                 dom.style.background = arrObj.background;   //因为是对象的形式传进来的 那就用对象形式调用赋值回去
+    //                 // console.log(4);
+    //             }else {
+    //                 dom.style[prop] = iCur + iSpeed + 'px';
+    //                 // console.log(5);
+    //             }
+    //             if(iCur != arrObj[prop]){  //思考：假如可以停止那么就反着来  如果有某个属性值不等于目标点 那么stop就等于false 不可以停止
+    //                 stop = false;
+    //                 // console.log(6);
+    //             }
+    //             if(stop) {  //只有stop是true了  那证明for in 循环里的属性值都到目标点了  才会走到这一步 进行停止 
+    //                 clearInterval(dom.timer);
+    //                 typeof callBack == 'function' && callBack();  //进行判断  callBack 是不是等于 function  是的话走后面的的函数调用
+    //             }
+    //         }
+    //     },30);
+    // }
+
+
+
+
+
+
+    //多物体不同值运动
+    //     var divArr = document.getElementsByTagName('div');
+
+    //     divArr[0].onclick = function () {
+    //         startMove(this,'width',250);
+    //     }
+    //     divArr[1].onclick = function () {
+    //         startMove(this,'height',150);
+    //     }
+    //     divArr[2].onclick = function () {
+    //         startMove(this,'width',300);
+    //     }
+    //     divArr[3].onclick = function () {
+    //         startMove(this,'opacity',50);
+    //     }
+
+    //     function getStyle (elem,prop) { //查找样式
+    //         if(window.getComputedStyle) {
+    //         	return window.getComputedStyle(elem,null)[prop];    //null 的位置是伪类 
+    //         }else {
+    //              return elem.currentstyle[prop];
+    //         }
+    //     } 
+
+    //    function startMove(dom,prop,target) {  //三个值分别是：操作谁，改变那个样式的值，目标值
+    //        clearInterval(dom.timer);
+    //        var iSpeed = null,
+    //             iCur = null;
+    //         dom.timer = setInterval(function () {
+    //             if(prop == 'opacity'){  // 先判断是透明度 还是不是透明度   prop是传进来的样式属性
+    //                iCur = parseFloat( getStyle(dom,prop) )  * 100; 
+    //                 // console.log(1);
+    //             }else {
+    //                 iCur = parseInt( getStyle(dom,prop) );
+    //                 // console.log(2);
+    //             }
+    //             iSpeed = (target - iCur) / 7; 
+    //             iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed); //向上取整 还是向下取整 
+    //             if(iCur == target){
+    //                 clearInterval(dom.timer);
+    //             }
+    //             if(prop == 'opacity'){
+    //                 dom.style.opacity = (iCur + iSpeed) / 100;
+    //                 // console.log(iSpeed);
+    //             }else {
+    //                 dom.style[prop] = iCur + iSpeed + 'px';
+    //             }
+    //         },30);
+    //    }
+
+
+
+
+
+
+    //多物体运动
+    // 要注意的是  要给每一个元素都单独的上上定时器 （重要的一点）
+    // var divArr = document.getElementsByTagName('div');
+
+    //这里循环是为了给每个DOM元素绑定事件
+    
+    //    for(var i = 0; i < divArr.length; i++){
+    //         divArr[i].onmouseenter = function () {
+    //             startMove(this,600);
+    //         }
+    //         divArr[i].onmouseleave = function () {
+    //             startMove(this,100);
+    //         }
+    //     }
+
+    //     function getStyle (elem,prop) { //查找样式
+    // 	    if(window.getComputedStyle) {
+    // 	    	return window.getComputedStyle(elem,null)[prop];    //null 的位置是伪类 
+    // 	    }else {
+    //              return elem.currentstyle[prop];
+    //         }
+    //     }   
+
+    //     function startMove (dom,target) {
+    //         clearInterval(dom.timer);
+    //         var iSpeed = null, 
+    //             iCur = null;
+    //         dom.timer = setInterval(function () {  //加上domm 是给传进来的都各自上定时器  互相不干扰
+    //             iCur = parseInt( getStyle(dom,'width') );  //这里是dom是因为用的是循环绑定的事件
+    //             iSpeed = (target - iCur) / 7; 
+    //             iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed); 
+    //             // console.log(iSpeed);  //打印这步是因为我要看速度
+    //             if(iCur == target) {
+    //                 clearInterval(dom.timer);
+    //             }else {
+    //                  dom.style.width = iCur + iSpeed + 'px';
+    //             }
+    //         },30);
+    //      }
+
+
+
+
+    //透明度缓冲
+    // var div = document.getElementsByTagName('div')[0];
+
+    // function getStyle (elem,prop) { //查找样式
+	//     if(window.getComputedStyle) {
+	//     	return window.getComputedStyle(elem,null)[prop];    //null 的位置是伪类 
+	//     }else {
+    //          return elem.currentstyle[prop];
+    //     }
+    // }   
+
+    // function startMove (dom,target){
+    //     clearInterval(timer)
+    //     var iSpeed = null,
+    //         iCur = null;  //样式的接收
+    //     timer = setInterval(function () {
+    //         iCur = parseFloat( getStyle(div,'opacity') ) * 100;  //返回的是字符串的  要通过parseFloat()转换为数字类型的  *100 把当前值都扩大 
+    //         iSpeed = (target - iCur)  / 7;
+    //         iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+    //         console.log(iSpeed);
+    //         if(iCur == target){
+    //             clearInterval(timer);
+    //         }else {
+    //             dom.style.opacity = (iCur + iSpeed) / 100;  // 除以100转化为小数  应为它不是 0 就是 1
+    //         }
+    //     },30);
+    // }
+
+    //  div.onclick = function () {
+    //     startMove (this,20);  //  目标值也扩大100倍
+    // }
+
+
+    //小案列   移出移入
+    // var div = document.getElementsByTagName('div')[0];
+    // var sp = document.getElementsByTagName('span')[0];
+
+    // div.onmouseenter = function () {
+    //     startMove (this,0); //移出为 0 
+    // }
+    // div.onmouseleave = function () {
+    //     startMove (this,-400); //移入为 -400 
+    // }
+
+    // function startMove (dom,target) {
+    //    clearInterval(timer);
+    //    var iSpeed = null; //开始是空的  移速在定时器中随时变动
+    //    timer = setInterval(function () {
+    //        iSpeed = (target - dom.offsetLeft) / 7; //目标值 - 当前位置值 位置一直在缩小  同时也区分了方向
+    //        iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed); //判断移动值 > 0 就走向上取整ceil  < 0 就走向下取整floor
+    //        // console.log(iSpeed);  //打印这部是应为我要看速度
+    //        if(dom.offsetLeft == target) {
+    //            clearInterval(timer);
+    //        }else {
+    //             dom.style.left = dom.offsetLeft + iSpeed + 'px';
+    //        }
+    //    },30);
+    // }
+
+
+
+
+    //缓冲运动
+    //物体的速度 距离目标点的越近 就越小 当到达目标点时 速度为 0
+    //  var div = document.getElementsByTagName('div')[0];
+    //  var but = document.getElementById('btn');
+    //  but.onclick = function () {
+    //      startMove(div,450);
+    //  }
+    //  function startMove (dom,target) {
+    //     clearInterval(timer);
+    //     var iSpeed = null; //开始是空的  移速在定时器中随时变动
+    //     timer = setInterval(function () {
+    //         iSpeed = (target - dom.offsetLeft) / 7; //目标值 - 当前位置值 位置一直在缩小  同时也区分了方向
+    //         iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed); //判断移动值 > 0 就走向上取整ceil  < 0 就走向下取整floor
+    //         // console.log(iSpeed);  //打印这部是应为我要看速度
+    //         if(dom.offsetLeft == target) {
+    //             clearInterval(timer);
+    //         }else {
+    //              dom.style.left = dom.doffsetLeft + iSpeed + 'px';
+    //         }
+    //     },30);
+    //  }
+
+
+
+    //匀速
+    // var div = document.getElementsByTagName('div')[0];
+    // var but = document.getElementById('btn');
+    // but.onclick = function () {
+    //     speedMove(div,450);
+    // }
+  
+    // function speedMove (dom,target) {
+    //     clearInterval(timer);  //开始前会先清除一遍   防止多次点击多次调用定时器 导致越来越快  
+    //     var iSpeed = target - dom.offsetLeft > 0 ? 7 : -7; //目标位置 - 当前位置 > 0 是true走7 是false走-7  判断是加7 还是-7
+    //     timer = setInterval(function () {
+    //         if( Math.abs(target - dom.offsetLeft) < Math.abs(iSpeed) ) { //目标距离 - 当前距离 < 每次移动的距离时清除定时器  abs取绝对值
+    //             clearInterval(timer);
+    //             dom.style.left = target + 'px'; //让差的一点距离直接等于目标距离
+    //         }else {
+    //             dom.style.left = dom.offsetLeft + iSpeed + 'px';
+               
+    //         }
+    //     },30)
+    // }
+
+   //把offsetLeft 换成offsetTop  就是垂直运动
+    
+
+   
+ </script>
+
+</body>
+</html>
