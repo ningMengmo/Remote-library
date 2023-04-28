@@ -44,15 +44,17 @@
         doms.aside.loginId.innerText = user.loginId;
     }
 
-    // 获取聊天消息   理解就行  API有问题了
-    // async function History() {
-    //     const resp = await API.getHistory()
-    //     // console.log(resp);
-    //     for (const item of resp.data) {
-    //         addChat(item)
-    //     }
-    //     scrollBottom()
-    // }
+    await History()
+
+    // 获取聊天消息   
+    async function History() {
+        const resp = await API.getHistory()
+        console.log(resp);
+        for (const item of resp.data) {
+            addChat(item)
+        }
+        scrollBottom()
+    }
 
     /**
      * 添加聊天的内容和信息渲染到页面
@@ -61,15 +63,15 @@
     function addChat(chatInfo) {
         // 创建对应的DOM
         const div = $$$('div');
-        div.classList.add('chat-item');
-        if (chatInfo.form) {
+         div.classList.add('chat-item');
+         if (chatInfo.from) {
             // 进入说明是自己发送的消息
-            div.classList.add('me');
-        }
+             div.classList.add('me');
+         }
 
         const img = $$$('img');
         img.className = 'chat-avatar';
-        img.src = chatInfo.form ? './asset/avatar.png' : './asset/robot-avatar.jpg'
+        img.src = chatInfo.from ? './asset/avatar.png' : './asset/robot-avatar.jpg';
 
         const content = $$$('div');
         content.className = 'chat-content';
@@ -82,7 +84,8 @@
         div.appendChild(img);
         div.appendChild(content);
         div.appendChild(date);
-        container.appendChild(div);
+        doms.container.appendChild(div);
+        console.log(div);
     }
 
     /**
